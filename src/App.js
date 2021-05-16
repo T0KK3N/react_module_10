@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
-import TareasLista from './TareasLista'
-import uuidv4 from 'uuid/v4'
+import TareasLista from './TareasLista';
+import { v4 as uuidv4 } from 'uuid';
 
 const ALMACENAMIENTO_LOCAL_KEY = 'tareasApp.tareas'
 
@@ -31,6 +31,14 @@ function App() {
       
   } 
 
+  function manejoLimpiarTareas(id) { 
+
+    const nuevaListaTareas = tareas.filter(tarea => !tarea.completado) 
+    
+    setTareas(nuevaListaTareas) 
+    
+  } 
+
   function agregarTarea(e){
     const nombre = tareaNombreRef.current.value
     if (nombre === '' ) return
@@ -45,8 +53,8 @@ function App() {
     <TareasLista tareas={tareas} marcadoTarea= {marcadoTarea}/>
     <input ref={tareaNombreRef} type="text" />
     <button onClick={agregarTarea}>Añadir Tarea</button>
-    <button>Limpiar Tareas Completadas</button>
-    <div>0 tareas por terminar</div>
+    <button onClick={manejoLimpiarTareas}>Limpiar Tareas Completadas</button>
+    <div> {tareas.filter(tarea => !tarea.completado).length} tareas por terminar</div>
     </>
   )
 }
