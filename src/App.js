@@ -19,6 +19,17 @@ function App() {
     localStorage.setItem(ALMACENAMIENTO_LOCAL_KEY, JSON.stringify(tareas))
     }, [tareas])
     
+  function marcadoTarea(id) { 
+
+      const nuevaListaTareas = [...tareas] 
+      
+      const tarea = nuevaListaTareas.find(tarea => tarea.id === id) 
+      
+      tarea.completado = !tarea.completado 
+      
+      setTareas(nuevaListaTareas) 
+      
+  } 
 
   function agregarTarea(e){
     const nombre = tareaNombreRef.current.value
@@ -31,7 +42,7 @@ function App() {
   
   return (
     <>
-    <TareasLista tareas={tareas}/>
+    <TareasLista tareas={tareas} marcadoTarea= {marcadoTarea}/>
     <input ref={tareaNombreRef} type="text" />
     <button onClick={agregarTarea}>Añadir Tarea</button>
     <button>Limpiar Tareas Completadas</button>
