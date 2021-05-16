@@ -1,10 +1,24 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import TareasLista from './TareasLista'
 import uuidv4 from 'uuid/v4'
+
+const ALMACENAMIENTO_LOCAL_KEY = 'tareasApp.tareas'
 
 function App() {
   const [ tareas, setTareas ] = useState ([ ])
   const tareaNombreRef = useRef()
+
+  useEffect( () => {
+    const tareasGuardadas = JSON.parse(localStorage.getItem 
+    (ALMACENAMIENTO_LOCAL_KEY))
+    if (tareasGuardadas) setTareas (tareasGuardadas)
+    }, [])
+    
+
+  useEffect( () => {
+    localStorage.setItem(ALMACENAMIENTO_LOCAL_KEY, JSON.stringify(tareas))
+    }, [tareas])
+    
 
   function agregarTarea(e){
     const nombre = tareaNombreRef.current.value
